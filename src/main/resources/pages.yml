@@ -1,0 +1,701 @@
+# MiniMessage formatting is supported in titles, summaries, content, and a
+# configured background glyph. Set wiki.background to false to disable the
+# background for the entire guide.
+# Use <page:page-id/> for a link labeled with the target title, or use
+# <page:page-id>custom label</page> when the link needs different text.
+# Page IDs are used by /wiki <page> and must contain only lowercase letters,
+# numbers, underscores, and hyphens. Pages with a parent are listed on that
+# parent page instead of in the main table of contents.
+# Page summaries may be blank or omitted. Page content may be an empty list or
+# omitted when a page should display only its title, background, or images.
+wiki:
+  title: "<bold><u>LegoWelt Wiki</u></bold>"
+  introduction: "Select a topic. Blue underlined terms open related wiki pages."
+  background: !!bool "false"
+  columns: !!int "3"
+pages:
+  getting-started:
+    title: "Getting Started"
+    summary: "Start with the server guides, rules, and gameplay systems."
+    content:
+      - "Welcome to LegoWelt!"
+      - "Read the <page:server-rules/>, then choose the <page:survival-server/> or <page:mining-server/> guide."
+      - "The <page:wiki-commands/> page lists the available guide commands and direct-page syntax."
+      - "Browse <page:features/>, <page:augments/>, <page:minerals/>, and <page:warps/> for the custom LegoWelt systems."
+      - "<b><u>Server links:</u></b>"
+      - "<b><blue><u><click:open_url:https://www.legowelt.net/map>BlueMap</click></u></blue></b>"
+      - "<blue><b><u><click:open_url:https://www.legowelt.net>Our Website</click></u></b></blue>"
+      - "<blue><b><u><click:open_url:https://www.patreon.com/legowelt>Patreon</click></u></b></blue> - Thank you for helping run the server!"
+  server-rules:
+    title: "Server Rules"
+    summary: "Respect other players, their builds, and the shared world."
+    content:
+      - "<b><u>The three important rules</u></b>"
+      - "<underlined>1. Be respectful to other players and the environment.</underlined>"
+      - "Do not destroy or build in another player base or in an area they intend to use."
+      - "Do not damage the world or environment without a good reason."
+      - "<underlined>2. No griefing, trespassing, or stealing.</underlined>"
+      - "Do not take items from another player unless you share that storage, base, or project."
+      - "Do not operate unfamiliar redstone builds without permission; complex mechanisms are easy to damage."
+      - "<underlined>3. Use common sense.</underlined>"
+      - "Before acting, consider whether it harms another player's experience or creates an unfair advantage."
+  wiki-commands:
+    parent: "getting-started"
+    title: "Wiki Commands"
+    summary: "Open, navigate, and administrate the in-game guide."
+    content:
+      - "<bold>/wiki</bold> - Open the table of contents."
+      - "<bold>/wiki page-id</bold> - Open a topic directly."
+      - "<bold>Examples:</bold> <page:features>/wiki features</page>, <page:augments>/wiki augments</page>, and <page:mining-server>/wiki mining-server</page>."
+    background: !!bool "false"
+  minerals:
+    parent: "features"
+    title: "Minerals"
+    summary: "Find rare mineral drops and learn how they are used."
+    content:
+      - "<page:minerals/> are extra drops obtained with a pickaxe on the <page:mining-server/>."
+      - "Each mineral has a matching source block. Stone and deepslate also have a small chance to drop a random mineral."
+      - "Minerals normally drop at Rare quality, with a 1 in 64 chance for a successful drop to become Epic."
+      - "Open the <page:mineral-chart/> for every mineral-to-block mapping."
+      - "Minerals are used by <page:custom-crafting/> recipes, including recipes for <page:augments/>."
+      - "Matching <page:augment-miners/> improve mineral drops. For example, <page:augment-ruby-miner>Ruby Miner</page> is the miner augment for redstone ore."
+      - "See <page:feature-toggles/> for the current toggle command status."
+  mineral-chart:
+    title: "Mineral Chart"
+    summary: "View minerals and where they can be found."
+    parent: "minerals"
+    background: !!bool "false"
+    content: []
+    images:
+      - glyphs:
+          - "<font:guidelegowelt:wiki>\uE010\uE011</font>"
+          - "<font:guidelegowelt:wiki>\uE012\uE013</font>"
+        width: !!int "464"
+        height: !!int "414"
+  augments:
+    title: "Augments"
+    summary: "Apply limited-use upgrades to compatible equipment."
+    content:
+      - "Place compatible equipment in the first anvil slot and an enchanted Augment Book in the second slot to apply its supported augments at no level cost."
+      - "Combining the same augment and level adds the book durability to the existing augment, up to its maximum."
+      - "Augment lore shows the level and remaining durability. An augment is removed when its durability reaches zero."
+      - "Craftable augments use <page:minerals/> or rare <page:sickles-and-farmables>Farmables</page>. Other books can come from <page:custom-loot-tables>Custom Loot</page> and augment traders."
+      - "Browse the complete catalog through <page:augment-equipment/>, <page:augment-farmers/>, <page:augment-miners/>, and <page:shulker-storage/>."
+      - "See <page:custom-crafting/> for book recycling and self-augment upgrades."
+  augment-equipment:
+    parent: "augments"
+    title: "Equipment Augments"
+    summary: "Browse equipment augments by item type and purpose."
+    content:
+      - "Each augment page lists compatible equipment, limits, durability, and behavior."
+  augment-telepathy:
+    parent: "augment-equipment"
+    title: "Augment: Telepathy"
+    summary: "Routes block drops into storage and then your inventory."
+    content:
+      - "<bold><underlined>Applies to:</underlined></bold> Diamond or netherite pickaxes, shovels, axes, and hoes; also shears."
+      - "<bold><underlined>Effect:</underlined></bold> Broken block drops first enter matching Collector shulkers, then empty player-inventory space. Anything that does not fit remains as a world drop."
+      - "<bold><underlined>Maximum durability:</underlined></bold> 90,000"
+      - "<bold><underlined>Durability use:</underlined></bold> 1 when at least one drop is inserted."
+      - "Related: <page:shulker-storage/> and <page:custom-crafting/>."
+  augment-durable:
+    parent: "augment-equipment"
+    title: "Augment: Durable"
+    summary: "Prevents item damage by spending augment durability."
+    content:
+      - "<bold><underlined>Applies to:</underlined></bold> Diamond and netherite tools, shears, flint and steel, brushes, fishing rods, and carrot or warped-fungus sticks."
+      - "<bold><underlined>Effect:</underlined></bold> Cancels normal durability damage and spends Durable durability instead."
+      - "<bold><underlined>Maximum durability:</underlined></bold> 450,000"
+      - "<bold><underlined>Durability use:</underlined></bold> 1 per damage event for items with at least 1,000 base durability; 10 for lower-durability items."
+      - "Related: <page:augments/> and <page:custom-crafting/>."
+  augment-eff-7:
+    parent: "augment-equipment"
+    title: "Augment: Efficiency"
+    summary: "Temporarily applies Efficiency VII to supported tools."
+    content:
+      - "<bold><underlined>Applies to:</underlined></bold> Diamond or netherite pickaxes, shovels, axes, and hoes; also shears."
+      - "<bold><underlined>Effect:</underlined></bold> Saves the previous Efficiency enchantment and applies Efficiency VII. The previous level is restored when the augment expires."
+      - "<bold><underlined>Maximum durability:</underlined></bold> 60,000"
+      - "<bold><underlined>Durability use:</underlined></bold> 1 for each broken block."
+      - "Related: <page:augment-excavate>Excavate</page>, <page:augment-vein-miner>Vein Miner</page>, and <page:custom-crafting/>."
+  augment-fortune-4:
+    parent: "augment-equipment"
+    title: "Augment: Fortune"
+    summary: "Temporarily applies Fortune IV to supported tools."
+    content:
+      - "<bold><underlined>Applies to:</underlined></bold> Diamond or netherite pickaxes, shovels, axes, and hoes; also shears."
+      - "<bold><underlined>Effect:</underlined></bold> Saves the previous Fortune enchantment and applies the augment level. Standard recipes create Fortune IV books."
+      - "<bold><underlined>Maximum durability:</underlined></bold> 400"
+      - "<bold><underlined>Durability use:</underlined></bold> 1 for each broken block."
+      - "Related: <page:custom-crafting/>."
+  augment-excavate:
+    parent: "augment-equipment"
+    title: "Augment: Excavate"
+    summary: "Breaks a plane or cube of blocks around the target."
+    content:
+      - "<bold><underlined>Applies to:</underlined></bold> Diamond or netherite pickaxes, shovels, axes, and hoes; also shears."
+      - "<bold><underlined>Level 1:</underlined></bold> Breaks a 3 x 3 plane aligned to the face being mined."
+      - "<bold><underlined>Level 2 :</underlined></bold> Breaks a 3 x 3 x 3 cube around the target."
+      - "<bold><underlined>Limits:</underlined></bold> Skips blocks the tool cannot effectively break and does not include obsidian unless the original target is obsidian."
+      - "<bold><underlined>Maximum level:</underlined></bold> 2"
+      - "<bold><underlined>Maximum durability:</underlined></bold> 8,000"
+      - "Discovered ores can also trigger <page:augment-vein-miner>Vein Miner</page>. See <page:custom-crafting/> for recipes."
+  augment-vein-miner:
+    parent: "augment-equipment"
+    title: "Augment: Vein Miner"
+    summary: "Breaks connected blocks from the same ore family."
+    content:
+      - "<bold><underlined>Applies to:</underlined></bold> Diamond or netherite pickaxes."
+      - "<bold><underlined>Effect:</underlined></bold> Breaks connected blocks from the target ore family, including diagonal connections. Raw ore blocks are included with their matching ore."
+      - "<bold><underlined>Maximum durability:</underlined></bold> 30,000"
+      - "<bold><underlined>Durability use:</underlined></bold> 1 for each additional ore block broken."
+      - "Works with ores exposed by <page:augment-excavate>Excavate</page>. Related: <page:minerals/> and <page:custom-crafting/>."
+  augment-infinity:
+    parent: "augment-equipment"
+    title: "Augment: Infinity"
+    summary: "Applies the vanilla Infinity enchantment to a bow."
+    content:
+      - "<bold><underlined>Applies to:</underlined></bold> Bows."
+      - "<bold><underlined>Effect:</underlined></bold> Adds the vanilla Infinity enchantment while the augment remains active. Even if the bow already has the mending enchantment."
+      - "<bold><underlined>Maximum durability:</underlined></bold> 90,000"
+      - "<bold><underlined>Durability use:</underlined></bold> 1 each time the augmented bow fires."
+      - "Related: <page:augments/> and <page:custom-crafting/>."
+  augment-compress:
+    parent: "augment-equipment"
+    title: "Augment: Compress"
+    summary: "Converts supported mining drops into storage blocks."
+    content:
+      - "<bold><underlined>Applies to:</underlined></bold> Diamond or netherite pickaxes."
+      - "<bold><underlined>Effect:</underlined></bold> Combines groups of nine supported drops into blocks while remembering per-player remainders."
+      - "<bold><underlined>Supported drops:</underlined></bold> Coal, raw iron, raw copper, raw gold, redstone, emeralds, lapis lazuli, diamonds, and gold nuggets."
+      - "<bold><underlined>Maximum durability:</underlined></bold> 90,000"
+      - "<bold><underlined>Durability use:</underlined></bold> 1 for a block-drop event containing at least one supported item."
+      - "Compression runs before <page:augment-telepathy>Telepathy</page>. Related: <page:custom-crafting/>."
+  augment-replant:
+    parent: "augment-equipment"
+    title: "Augment: Replant"
+    summary: "Replants supported crops after a valid sickle harvest."
+    content:
+      - "<bold><underlined>Applies to:</underlined></bold> Custom diamond or netherite sickles."
+      - "Effect: Replants wheat, potatoes, carrots, beetroot, nether wart, or cocoa after harvest."
+      - "The seed or crop is taken first from the block drops, then a <page:augment-restocker>Restocker</page> shulker, then the player inventory. Replanting fails if no matching item is available or the block is no longer empty."
+      - "Limits: Level 1; maximum durability 90,000; Uncommon."
+      - "Durability use: None in the current version."
+      - "Related: <page:sickles-and-farmables/> and <page:augment-farmers/>."
+  augment-farmers:
+    parent: "augments"
+    title: "Farmer Augments"
+    summary: "Improve one matching farmable and the normal drops from its crop."
+    content:
+      - "<bold><underlined>Applies to:</underlined></bold> Custom diamond or netherite sickles."
+      - "Each Farmer augment matches one crop. On a directly harvested eligible block, it improves the Rare farmable roll and can multiply normal crop drops."
+      - "<bold><underlined>Farmable chance:</underlined></bold> The base Rare chance is 1 in 128. The bonus grows with level and doubles that chance at level 10; a successful Rare roll has a 1 in 64 chance to become Epic."
+      - "<bold><underlined>Normal drops:</underlined></bold> Each level adds a 20% chance for one extra complete set. Level 5 always doubles normal drops; level 10 always triples them."
+      - "<bold><underlined>Limits:</underlined></bold> Levels 1-10, maximum durability 10,000, Uncommon, and 1 durability used for each eligible harvest. One item can hold at most five Farmer or Miner augments in total."
+      - "Ageable crops must be fully grown. See <page:augment-replant>Replant</page> for supported automatic replanting."
+      - "Crops: <page:augment-wheat-farmer>Wheat</page>, <page:augment-potato-farmer>Potato</page>, <page:augment-carrot-farmer>Carrot</page>, <page:augment-beetroot-farmer>Beetroot</page>, <page:augment-melon-farmer>Melon</page>, and <page:augment-pumpkin-farmer>Pumpkin</page>."
+      - "Plants: <page:augment-sweet-berries-farmer>Sweet Berries</page>, <page:augment-cactus-farmer>Cactus</page>, <page:augment-cactus-flower-farmer>Cactus Flower</page>, <page:augment-sugar-cane-farmer>Sugar Cane</page>, and <page:augment-bamboo-farmer>Bamboo</page>."
+      - "Special crops: <page:augment-nether-wart-farmer>Nether Wart</page>, <page:augment-torchflower-farmer>Torchflower</page>, and <page:augment-cocoa-beans-farmer>Cocoa Beans</page>."
+      - "Related: <page:sickles-and-farmables/> and <page:custom-crafting/>."
+  augment-wheat-farmer:
+    parent: "augment-farmers"
+    title: "Augment: Wheat Farmer"
+    summary: "Improves farmable rarity and normal drops from mature wheat."
+    content:
+      - "Matching crop: Fully grown Wheat."
+      - "Base Rare wheat chance: 1 in 128 per eligible harvest."
+      - "Wheat Farmer follows the shared level 1-10 rules on the <page:augment-farmers/> page and supports <page:augment-replant>Replant</page> with wheat seeds."
+  augment-potato-farmer:
+    parent: "augment-farmers"
+    title: "Augment: Potato Farmer"
+    summary: "Improves farmable rarity and normal drops from mature potatoes."
+    content:
+      - "Matching crop: Fully grown Potatoes."
+      - "Base Rare potato chance: 1 in 128 per eligible harvest."
+      - "Potato Farmer follows the shared level 1-10 rules on the <page:augment-farmers/> page and supports <page:augment-replant>Replant</page> with a potato."
+  augment-carrot-farmer:
+    parent: "augment-farmers"
+    title: "Augment: Carrot Farmer"
+    summary: "Improves farmable rarity and normal drops from mature carrots."
+    content:
+      - "Matching crop: Fully grown Carrots."
+      - "Base Rare carrot chance: 1 in 128 per eligible harvest."
+      - "Carrot Farmer follows the shared level 1-10 rules on the <page:augment-farmers/> page and supports <page:augment-replant>Replant</page> with a carrot."
+  augment-beetroot-farmer:
+    parent: "augment-farmers"
+    title: "Augment: Beetroot Farmer"
+    summary: "Improves farmable rarity and normal drops from mature beetroot."
+    content:
+      - "Matching crop: Fully grown Beetroots."
+      - "Base Rare beetroot chance: 1 in 128 per eligible harvest."
+      - "Beetroot Farmer follows the shared level 1-10 rules on the <page:augment-farmers/> page and supports <page:augment-replant>Replant</page> with beetroot seeds."
+  augment-melon-farmer:
+    parent: "augment-farmers"
+    title: "Augment: Melon Farmer"
+    summary: "Improves farmable rarity and normal drops from melons."
+    content:
+      - "Matching crop: Melon blocks."
+      - "Base Rare melon chance: 1 in 128 per eligible harvest."
+      - "Melon Farmer follows the shared level 1-10 rules on the <page:augment-farmers/> page. Melons are not handled by Replant."
+  augment-pumpkin-farmer:
+    parent: "augment-farmers"
+    title: "Augment: Pumpkin Farmer"
+    summary: "Improves farmable rarity and normal drops from pumpkins."
+    content:
+      - "Matching crop: Pumpkin blocks."
+      - "Base Rare pumpkin chance: 1 in 128 per eligible harvest."
+      - "Pumpkin Farmer follows the shared level 1-10 rules on the <page:augment-farmers/> page. Pumpkins are not handled by Replant."
+  augment-sweet-berries-farmer:
+    parent: "augment-farmers"
+    title: "Augment: Sweet Berries Farmer"
+    summary: "Improves farmable rarity and normal drops from mature sweet berry bushes."
+    content:
+      - "Matching crop: Fully grown Sweet Berry Bushes."
+      - "Base Rare sweet berries chance: 1 in 128 per eligible harvest."
+      - "Sweet Berries Farmer follows the shared level 1-10 rules on the <page:augment-farmers/> page. Sweet berries are not handled by Replant."
+  augment-cactus-farmer:
+    parent: "augment-farmers"
+    title: "Augment: Cactus Farmer"
+    summary: "Improves farmable rarity and normal drops from cactus."
+    content:
+      - "Matching crop: Cactus."
+      - "Base Rare cactus chance: 1 in 128 per eligible harvest."
+      - "Cactus Farmer follows the shared level 1-10 rules on the <page:augment-farmers/> page. Cactus is not handled by Replant."
+  augment-cactus-flower-farmer:
+    parent: "augment-farmers"
+    title: "Augment: Cactus Flower Farmer"
+    summary: "Improves farmable rarity and normal drops from cactus flowers."
+    content:
+      - "Matching crop: Cactus Flower."
+      - "Base Rare cactus flower chance: 1 in 128 per eligible harvest."
+      - "Cactus Flower Farmer follows the shared level 1-10 rules on the <page:augment-farmers/> page. Cactus flowers are not handled by Replant."
+  augment-sugar-cane-farmer:
+    parent: "augment-farmers"
+    title: "Augment: Sugar Cane Farmer"
+    summary: "Improves farmable rarity and normal drops from sugar cane."
+    content:
+      - "Matching crop: Sugar Cane."
+      - "Base Rare sugar cane chance: 1 in 128 per eligible harvest."
+      - "Sugar Cane Farmer follows the shared level 1-10 rules on the <page:augment-farmers/> page. Sugar cane is not handled by Replant."
+  augment-bamboo-farmer:
+    parent: "augment-farmers"
+    title: "Augment: Bamboo Farmer"
+    summary: "Improves farmable rarity and normal drops from bamboo."
+    content:
+      - "Matching crop: Bamboo."
+      - "Base Rare bamboo chance: 1 in 128 per eligible harvest."
+      - "Bamboo Farmer follows the shared level 1-10 rules on the <page:augment-farmers/> page. Bamboo is not handled by Replant."
+  augment-nether-wart-farmer:
+    parent: "augment-farmers"
+    title: "Augment: Nether Wart Farmer"
+    summary: "Improves farmable rarity and normal drops from mature nether wart."
+    content:
+      - "Matching crop: Fully grown Nether Wart."
+      - "Base Rare nether wart chance: 1 in 128 per eligible harvest."
+      - "Nether Wart Farmer follows the shared level 1-10 rules on the <page:augment-farmers/> page and supports <page:augment-replant>Replant</page> with nether wart."
+  augment-torchflower-farmer:
+    parent: "augment-farmers"
+    title: "Augment: Torchflower Farmer"
+    summary: "Improves farmable rarity and normal drops from torchflowers."
+    content:
+      - "Matching crop: Torchflower."
+      - "Base Rare torchflower chance: 1 in 128 per eligible harvest."
+      - "Torchflower Farmer follows the shared level 1-10 rules on the <page:augment-farmers/> page. Torchflowers are not handled by Replant."
+  augment-cocoa-beans-farmer:
+    parent: "augment-farmers"
+    title: "Augment: Cocoa Beans Farmer"
+    summary: "Improves farmable rarity and normal drops from mature cocoa."
+    content:
+      - "Matching crop: Fully grown Cocoa."
+      - "Base Rare cocoa beans chance: 1 in 128 per eligible harvest."
+      - "Cocoa Beans Farmer follows the shared level 1-10 rules on the <page:augment-farmers/> page and supports <page:augment-replant>Replant</page> on jungle wood."
+  augment-miners:
+    parent: "augments"
+    title: "Miner Augments"
+    summary: "Improve one matching mineral and the normal drops from its source blocks."
+    content:
+      - "<bold><underlined>Applies to:</underlined></bold> Diamond or netherite pickaxes."
+      - "Each Miner augment matches one <page:minerals>Mineral</page>. On a directly mined, unaltered matching block, it improves that mineral roll and can multiply the normal block drops."
+      - "<bold><underlined>Mineral chance:</underlined></bold> The bonus grows with level and doubles the matching mineral base chance at level 10."
+      - "<bold><underlined>Normal drops:</underlined></bold> Each level adds a 20% chance for one extra complete set. Level 5 always doubles normal drops; level 10 always triples them."
+      - "<bold><underlined>Limits:</underlined></bold> Levels 1-10, maximum durability 10,000, and 1 durability used for each eligible block. One item can hold at most five Miner or Farmer augments in total."
+      - "Stone and deepslate first select a random mineral and then make a 1 in 500 roll; only the Miner augment matching the selected mineral affects that roll."
+      - "<bold><underlined>Overworld stone minerals:</underlined></bold> <page:augment-iolite-miner>Iolite</page>, <page:augment-moonstone-miner>Moonstone</page>, <page:augment-limestone-miner>Limestone</page>, <page:augment-carnelian-miner>Carnelian</page>, <page:augment-selenite-miner>Selenite</page>, and <page:augment-asphalite-miner>Asphalite</page>."
+      - "<bold><underlined>Overworld ore minerals:</underlined></bold> <page:augment-onyx-miner>Onyx</page>, <page:augment-galena-miner>Galena</page>, <page:augment-bauxite-miner>Bauxite</page>, <page:augment-tiger-eye-miner>Tiger Eye</page>, <page:augment-ruby-miner>Ruby (Redstone)</page>, <page:augment-jade-miner>Jade</page>, and <page:augment-azurite-miner>Azurite</page>."
+      - "<bold><underlined>Nether minerals:</underlined></bold> <page:augment-amber-miner>Amber</page>, <page:augment-pyrite-miner>Pyrite</page>, and <page:augment-rose-quartz-miner>Rose Quartz</page>."
+      - "Use <page:custom-crafting/> to upgrade identical self-augment books."
+  augment-iolite-miner:
+    parent: "augment-miners"
+    title: "Augment: Iolite Miner"
+    summary: "Improves Iolite drops from amethyst blocks and clusters."
+    content:
+      - "Matching blocks: Amethyst Block and Amethyst Cluster."
+      - "Base Iolite chance: 1 in 40 per eligible block."
+      - "The Iolite Miner bonus and normal-drop multiplier follow the shared level 1-10 rules on the <page:augment-miners/> page."
+      - "See the <page:mineral-chart/> for the complete mineral mapping."
+  augment-moonstone-miner:
+    parent: "augment-miners"
+    title: "Augment: Moonstone Miner"
+    summary: "Improves Moonstone drops from calcite."
+    content:
+      - "Matching block: Calcite."
+      - "Base Moonstone chance: 1 in 40 per eligible block."
+      - "The Moonstone Miner bonus and normal-drop multiplier follow the shared level 1-10 rules on the <page:augment-miners/> page."
+      - "See the <page:mineral-chart/> for the complete mineral mapping."
+  augment-limestone-miner:
+    parent: "augment-miners"
+    title: "Augment: Limestone Miner"
+    summary: "Improves Limestone drops from diorite."
+    content:
+      - "Matching block: Diorite."
+      - "Base Limestone chance: 1 in 40 per eligible block."
+      - "The Limestone Miner bonus and normal-drop multiplier follow the shared level 1-10 rules on the <page:augment-miners/> page."
+      - "See the <page:mineral-chart/> for the complete mineral mapping."
+  augment-carnelian-miner:
+    parent: "augment-miners"
+    title: "Augment: Carnelian Miner"
+    summary: "Improves Carnelian drops from granite."
+    content:
+      - "Matching block: Granite."
+      - "Base Carnelian chance: 1 in 40 per eligible block."
+      - "The Carnelian Miner bonus and normal-drop multiplier follow the shared level 1-10 rules on the <page:augment-miners/> page."
+      - "See the <page:mineral-chart/> for the complete mineral mapping."
+  augment-selenite-miner:
+    parent: "augment-miners"
+    title: "Augment: Selenite Miner"
+    summary: "Improves Selenite drops from andesite."
+    content:
+      - "Matching block: Andesite."
+      - "Base Selenite chance: 1 in 40 per eligible block."
+      - "The Selenite Miner bonus and normal-drop multiplier follow the shared level 1-10 rules on the <page:augment-miners/> page."
+      - "See the <page:mineral-chart/> for the complete mineral mapping."
+  augment-asphalite-miner:
+    parent: "augment-miners"
+    title: "Augment: Asphalite Miner"
+    summary: "Improves Asphalite drops from tuff."
+    content:
+      - "Matching block: Tuff."
+      - "Base Asphalite chance: 1 in 40 per eligible block."
+      - "The Asphalite Miner bonus and normal-drop multiplier follow the shared level 1-10 rules on the <page:augment-miners/> page."
+      - "See the <page:mineral-chart/> for the complete mineral mapping."
+  augment-onyx-miner:
+    parent: "augment-miners"
+    title: "Augment: Onyx Miner"
+    summary: "Improves Onyx drops from coal ore."
+    content:
+      - "Matching blocks: Coal Ore and Deepslate Coal Ore."
+      - "Base Onyx chance: 1 in 20 per eligible block."
+      - "The Onyx Miner bonus and normal-drop multiplier follow the shared level 1-10 rules on the <page:augment-miners/> page."
+      - "See the <page:mineral-chart/> for the complete mineral mapping."
+  augment-galena-miner:
+    parent: "augment-miners"
+    title: "Augment: Galena Miner"
+    summary: "Improves Galena drops from iron ore."
+    content:
+      - "Matching blocks: Iron Ore and Deepslate Iron Ore."
+      - "Base Galena chance: 1 in 20 per eligible block."
+      - "The Galena Miner bonus and normal-drop multiplier follow the shared level 1-10 rules on the <page:augment-miners/> page."
+      - "See the <page:mineral-chart/> for the complete mineral mapping."
+  augment-bauxite-miner:
+    parent: "augment-miners"
+    title: "Augment: Bauxite Miner"
+    summary: "Improves Bauxite drops from copper ore."
+    content:
+      - "Matching blocks: Copper Ore and Deepslate Copper Ore."
+      - "Base Bauxite chance: 1 in 20 per eligible block."
+      - "The Bauxite Miner bonus and normal-drop multiplier follow the shared level 1-10 rules on the <page:augment-miners/> page."
+      - "See the <page:mineral-chart/> for the complete mineral mapping."
+  augment-tiger-eye-miner:
+    parent: "augment-miners"
+    title: "Augment: Tiger Eye Miner"
+    summary: "Improves Tiger Eye drops from gold ore."
+    content:
+      - "Matching blocks: Gold Ore and Deepslate Gold Ore."
+      - "Base Tiger Eye chance: 1 in 20 per eligible block."
+      - "The Tiger Eye Miner bonus and normal-drop multiplier follow the shared level 1-10 rules on the <page:augment-miners/> page."
+      - "See the <page:mineral-chart/> for the complete mineral mapping."
+  augment-ruby-miner:
+    parent: "augment-miners"
+    title: "Augment: Ruby Miner"
+    summary: "The redstone miner augment; improves Ruby drops from redstone ore."
+    content:
+      - "Matching blocks: Redstone Ore and Deepslate Redstone Ore."
+      - "Base Ruby chance: 1 in 20 per eligible block."
+      - "Ruby Miner is the in-game name for the redstone-specific Miner augment."
+      - "Its mineral bonus and normal-drop multiplier follow the shared level 1-10 rules on the <page:augment-miners/> page."
+      - "See the <page:mineral-chart/> for the complete mineral mapping."
+  augment-jade-miner:
+    parent: "augment-miners"
+    title: "Augment: Jade Miner"
+    summary: "Improves Jade drops from emerald ore."
+    content:
+      - "Matching blocks: Emerald Ore and Deepslate Emerald Ore."
+      - "Base Jade chance: 1 in 3 per eligible block."
+      - "The Jade Miner bonus and normal-drop multiplier follow the shared level 1-10 rules on the <page:augment-miners/> page."
+      - "See the <page:mineral-chart/> for the complete mineral mapping."
+  augment-azurite-miner:
+    parent: "augment-miners"
+    title: "Augment: Azurite Miner"
+    summary: "Improves Azurite drops from lapis ore."
+    content:
+      - "Matching blocks: Lapis Ore and Deepslate Lapis Ore."
+      - "Base Azurite chance: 1 in 20 per eligible block."
+      - "The Azurite Miner bonus and normal-drop multiplier follow the shared level 1-10 rules on the <page:augment-miners/> page."
+      - "See the <page:mineral-chart/> for the complete mineral mapping."
+  augment-amber-miner:
+    parent: "augment-miners"
+    title: "Augment: Amber Miner"
+    summary: "Improves Amber drops from nether gold ore."
+    content:
+      - "Matching block: Nether Gold Ore."
+      - "Base Amber chance: 1 in 20 per eligible block."
+      - "The Amber Miner bonus and normal-drop multiplier follow the shared level 1-10 rules on the <page:augment-miners/> page."
+      - "See the <page:mineral-chart/> for the complete mineral mapping."
+  augment-pyrite-miner:
+    parent: "augment-miners"
+    title: "Augment: Pyrite Miner"
+    summary: "Improves Pyrite drops from glowstone."
+    content:
+      - "Matching block: Glowstone."
+      - "Base Pyrite chance: 1 in 20 per eligible block."
+      - "The Pyrite Miner bonus and normal-drop multiplier follow the shared level 1-10 rules on the <page:augment-miners/> page."
+      - "See the <page:mineral-chart/> for the complete mineral mapping."
+  augment-rose-quartz-miner:
+    parent: "augment-miners"
+    title: "Augment: Rose Quartz Miner"
+    summary: "Improves Rose Quartz drops from nether quartz ore."
+    content:
+      - "Matching block: Nether Quartz Ore."
+      - "Base Rose Quartz chance: 1 in 20 per eligible block."
+      - "The Rose Quartz Miner bonus and normal-drop multiplier follow the shared level 1-10 rules on the <page:augment-miners/> page."
+      - "See the <page:mineral-chart/> for the complete mineral mapping."
+  warps:
+    title: "Warps"
+    summary: "Travel through persistent linked gates within or across servers."
+    content:
+      - "A <page:warps>Warp</page> contains two linked gates. Entering an enabled gate sends supported players or passive entities to the other side."
+      - "Player warp tickets can be used on the Survival or Tech server in their overworld or nether. Tickets must be unstacked."
+      - "New and moved gates cannot intersect another warp. In the Survival overworld, normal tickets cannot be used within 500 blocks of spawn."
+      - "Stand and look in the desired travel direction before using a ticket; gate direction is rounded to 45-degree steps."
+      - "Choose a <page:spawn-warp/>, <page:anywhere-warp/>, or <page:system-warp/> below."
+      - "<page:custom-potions>Return Potions</page> use a private one-use warp to return to a Mining Server location."
+  spawn-warp:
+    parent: "warps"
+    title: "Spawn Warp"
+    summary: "Connect one private base gate to an assigned spawn chamber."
+    content:
+      - "A <page:spawn-warp/> connects your chosen location to an automatically assigned chamber at Survival spawn."
+      - "Each player can own one Spawn Warp. Creation fails when no spawn chamber is available."
+      - "Creating the warp consumes the Spawn Warp ticket and gives you a chamber-move ticket."
+      - "A normal Move Warp ticket can move the base side. A chamber-move ticket moves the spawn side to an empty spawn chamber."
+      - "Ticket prices are configured by server staff."
+      - "See <page:warps/> for shared placement restrictions."
+  anywhere-warp:
+    parent: "warps"
+    title: "Anywhere Warp"
+    summary: "Create a named two-way warp between two valid locations."
+    content:
+      - "Right-click an unstacked Anywhere Warp ticket at the first location, then at the second location. Use the anvil screen to name the completed warp."
+      - "Left-clicking before completion resets the locations stored on the ticket."
+      - "There is no per-player limit on named Anywhere Warps."
+      - "<b>Valid locations:</b> Survival or Tech overworld and nether locations outside the Survival spawn exclusion area that do not intersect another warp."
+      - "Anywhere Warps cannot be created in End worlds or unsupported server types."
+      - "To move one side, activate a Move Warp ticket, walk into the gate to select that side, then use the ticket at its new location."
+      - "Ticket prices and build permissions are configured by server staff."
+      - "See <page:warps/> for shared placement rules."
+  system-warp:
+    parent: "warps"
+    title: "System Warp"
+    summary: "Staff-managed global or infrastructure warps."
+    content:
+      - "<page:system-warp>System Warps</page> are created and maintained with staff-only warp commands."
+      - "Global warps use a shared system owner rather than a player account."
+      - "Staff can configure each side position, enabled state, permission, server, world, and visual particle settings."
+      - "System Warp availability and destinations are live server configuration rather than player-purchased tickets."
+      - "See <page:warps/> for normal player warp behavior."
+  features:
+    title: "Features"
+    summary: "Browse LegoWelt gameplay systems and quality-of-life tools."
+    content:
+      - "Select a feature below for behavior and usage details."
+      - "The major systems also have dedicated guides for <page:augments/> and <page:warps/>."
+      - "Server-specific availability is summarized on the <page:survival-server/> and <page:mining-server/> pages."
+      - "Other utilities include <page:map-copyright/>."
+  openable-shulkers:
+    parent: "features"
+    title: "Openable Shulker Boxes"
+    summary: "Use the server shulker integration without placing boxes."
+    content:
+      - "Inventory shulker opening and cycling are provided by the server's shulker integration."
+      - "Open a shulker from your inventory or by right-clicking while holding it, without placing the box in the world."
+      - "Cycle between accessible shulker boxes without closing the inventory screen."
+      - "LegoWelt adds <page:shulker-storage/> that use the same inventory integration."
+  shulker-storage:
+    parent: "augments"
+    title: "Shulker Storage Augments"
+    summary: "Automate pickup, block restocking, disposal, and nested storage."
+    content:
+      - "Five shulker augments currently exist: <page:augment-expansion>Expansion</page>, <page:augment-bag-of-holding>Bag of Holding</page>, <page:augment-cactus-storage>Cactus Storage</page>, <page:augment-collector>Collector</page>, and <page:augment-restocker>Restocker</page>."
+      - "Each applies to shulker boxes. These Rare augments have effectively unlimited durability."
+      - "Collector, Restocker, and Cactus Storage scan augmented shulkers nested inside a Bag of Holding."
+      - "See <page:openable-shulkers>Openable Shulkers</page>, <page:augments/>, and <page:custom-crafting/>."
+  augment-expansion:
+    parent: "shulker-storage"
+    title: "Augment: Expansion"
+    summary: "Adds extra inventory rows to a shulker box."
+    content:
+      - "<bold><underlined><bold><underlined>Applies to:</underlined></bold></underlined></bold> Shulker boxes."
+      - "Effect: Adds one storage row per augment level."
+      - "Bag of Holding smithing can add Expansion levels to the wearable bag. See <page:augment-bag-of-holding>Bag of Holding</page> and <page:custom-crafting/>."
+  augment-bag-of-holding:
+    parent: "shulker-storage"
+    title: "Augment: Bag of Holding"
+    summary: "Creates a wearable gliding shulker that permits nested shulkers."
+    content:
+      - "<bold><underlined>Applies to:</underlined></bold> Shulker boxes. \n"
+      - "Can only be created by crafting it."
+      - "<bold><underlined>Effect:</underlined></bold> Permits shulker boxes inside the bag and lets storage augments scan those nested boxes."
+      - "The bag is wearable as a glider, cannot be placed or dispensed, and only one Bag of Holding may be carried or held on the cursor at a time."
+      - "It can also be upgraded with <page:augment-expansion>Expansion</page> up to level 3."
+      - "See <page:custom-crafting/> for the smithing recipe."
+  augment-cactus-storage:
+    parent: "shulker-storage"
+    title: "Augment: Cactus Storage"
+    summary: "Destroys incoming items that already have a matching sample in the shulker."
+    content:
+      - "<bold><underlined>Applies to:</underlined></bold> Shulker boxes."
+      - "<bold><underlined>Effect:</underlined></bold> Destroys a picked-up or Telepathy-routed item when this shulker already contains at least one matching item."
+      - "Cactus Storage is processed before <page:augment-collector>Collector</page>, including in nested shulkers."
+  augment-collector:
+    parent: "shulker-storage"
+    title: "Augment: Collector"
+    summary: "Routes matching incoming items into a shulker."
+    content:
+      - "<bold><underlined>Applies to:</underlined></bold> Shulker boxes."
+      - "<bold><underlined>Effect:</underlined></bold> Sends picked-up or <page:augment-telepathy>Telepathy</page>-routed items into this shulker when it already contains at least one matching item."
+      - "Items that do not match or do not fit continue to later Collector shulkers or the normal player inventory."
+      - "See <page:custom-crafting/>."
+  augment-restocker:
+    parent: "shulker-storage"
+    title: "Augment: Restocker"
+    summary: "Refills matching player-inventory stacks from a shulker."
+    content:
+      - "<bold><underlined>Applies to:</underlined></bold> Shulker boxes."
+      - "<bold><underlined>Effect:</underlined></bold> When an inventory stack shrinks or empties, pulls similar items from Restocker shulkers back into the same slot."
+      - "<page:augment-replant>Replant</page> can also take one matching seed or crop directly from Restocker storage."
+      - "See <page:custom-crafting/>."
+  custom-loot-tables:
+    parent: "features"
+    title: "Custom Loot Tables"
+    summary: "Generate server-defined rewards from untouched loot containers."
+    content:
+      - "Untouched lootable block and entity containers on the <page:survival-server/>, <page:mining-server/>, and Tech server are handled as <page:shared-loot/>."
+      - "Exact rewards come from server loot tables and may change independently."
+      - "<page:loot-crate/> and augment traders use dedicated server loot tables."
+      - "Custom travel items are described on the <page:custom-potions/> page."
+  shared-loot:
+    parent: "features"
+    title: "Personal Loot"
+    summary: "Give each player separate timed loot from one container."
+    content:
+      - "The first interaction with an untouched loot-table container starts a 20-minute <page:shared-loot/> session."
+      - "Each player receives a separate inventory generated from the same table. The inventory title shows the remaining minutes."
+      - "Items can be removed but cannot be deposited into the personal-loot inventory."
+      - "When the session starts, exactly two players within 128 blocks give the container a 20% chance to generate its table twice. Three or more give it a 25% chance."
+      - "Breaking the block container or destroying an active lootable vehicle drops outstanding active personal inventories at that location."
+      - "Personal Loot runs on the <page:survival-server>Survival</page>, <page:mining-server>Mining</page>, and Tech server types."
+  loot-crate:
+    parent: "features"
+    title: "Treasure Barrels"
+    summary: "Reveal tiered loot barrels while directly mining blocks."
+    content:
+      - "Directly breaking an unaltered block on the <page:mining-server/> can replace that block with an upward-facing <page:loot-crate>Treasure Barrel</page>."
+      - "The four tiers are Common, Rare, Epic, and Legendary. Each tier uses a separate server loot table and sound; Legendary finds are announced."
+      - "Diamond ore, emerald ore, and ancient debris have the highest weight. Redstone, iron, copper, coal, lapis, and nether-quartz ores also have much higher weight than ordinary blocks."
+      - "Progress toward each tier accumulates while mining, with a pity threshold at three times the normal weighted chance."
+      - "Barrels are not generated for the extra blocks recursively broken by <page:augment-excavate>Excavate</page>."
+      - "The expected loot comes from <page:custom-loot-tables/>. See <page:feature-toggles/> for toggle status."
+  custom-potions:
+    parent: "features"
+    title: "Custom Potions"
+    summary: "Use consumable travel effects across shared-inventory servers."
+    content:
+      - "<b>Return Potion:</b> Used on the <page:mining-server/>. Sends you to an available chamber on Survival and creates a private one-use <page:warps>Warp</page> back to the consumed location."
+      - "<b>Recall Potion:</b> Teleports you to the first-world spawn of the current server."
+      - "<b>Wormhole Potion:</b> Opens a list of other online players on Survival, Mining, or Tech and teleports you to the selected player, including across servers."
+      - "<b>Teleport Potion:</b> Used on Mining. Chooses a random X/Z within 25 million blocks, moves you above the highest block, then grants Fire Resistance and Water Breathing for 60 seconds plus Resistance V for 10 seconds."
+      - "<b>Resurgence Potion:</b> Moves you above the highest block at a random X/Z within 1,000 blocks of your last valid death location and grants the same protection effects."
+      - "<b>Group Return Potion:</b> Currently unavailable."
+      - "Closing the Wormhole player list without choosing a player returns one potion to your inventory or drops it when the inventory is full."
+  orientation-scrolls:
+    parent: "features"
+    title: "Scrolls of Orientation"
+    summary: "Consume a scroll to create a compass for a nearby target."
+    content:
+      - "Hold an unsealed Scroll of Orientation in your main hand on the <page:mining-server/>."
+      - "/locatescroll biome namespace:id searches for a registered biome within 2,500 blocks."
+      - "/locatescroll structure namespace:id searches within four region files for a registered structure."
+      - "Tab completion lists valid biome and structure identifiers."
+      - "A successful search consumes one scroll and gives you a named lodestone compass pointing to the result. A failed search does not consume the scroll."
+      - "Unseal a Sealed Scroll of Orientation by surrounding it with four Echo Shards. See <page:custom-crafting/>."
+  sickles-and-farmables:
+    parent: "features"
+    title: "Sickles and Farmables"
+    summary: "Harvest supported crops with custom tools and rarity drops."
+    content:
+      - "<page:sickles-and-farmables>Sickles</page> are custom hoes available in wood, stone, iron, gold, diamond, and netherite tiers."
+      - "Harvesting a supported crop with a sickle replaces one normal drop with an Uncommon farmable. Each valid harvest has a 1 in 128 chance to produce Rare instead; that success has a 1 in 64 chance to become Epic."
+      - "Ageable crops must be fully grown. Supported crops are wheat, potatoes, carrots, beetroot, melons, pumpkins, sweet berries, cactus, cactus flowers, sugar cane, bamboo, nether wart, torchflowers, pitcher plants, and cocoa."
+      - "A matching Farmer augment improves the rare-drop chance and can multiply normal drops. These self augments support levels 1 through 10."
+      - "The Replant augment uses one matching seed or crop from the drops, a Restocker shulker, or your inventory to replant farmland crops, nether wart, or cocoa."
+      - "Related: <page:augments/>, <page:shulker-storage>Shulker Storage</page>, and <page:custom-crafting/>."
+  custom-crafting:
+    parent: "features"
+    title: "Custom Crafting"
+    summary: "Craft, compress, downgrade, upgrade, and recycle custom items."
+    content:
+      - "LegoWelt recipes are discovered automatically when you join."
+      - "Custom recipes cover <page:sickles-and-farmables/>, <page:orientation-scrolls/>, <page:minerals/>, <page:augments/>, and <page:shulker-storage>Storage Upgrades</page>."
+      - "Nine identical supported mineral or farmable items make a bag; nine matching bags make a crate. Unbagging and uncrating reverse those recipes."
+      - "One Epic mineral makes 64 Rare copies. Rare or Epic farmables make 64 copies at the next lower rarity."
+      - "Smelting an Augment Book returns approximately 90-110% of its remaining value as Augment Scrap. Values below one scrap can produce an Augment Particle; nine particles make one scrap."
+      - "Two, four, or eight identical self-augment books increase the level by one, two, or three. Combined durability is divided by the same power of two and the result cannot exceed level 10."
+      - "A Bag of Holding is smithed from its upgrade template, an elytra, and a netherite block. Repeating the process on the bag adds Expansion levels up to 3."
+  map-copyright:
+    parent: "features"
+    title: "Map Copyright"
+    summary: "Assign a filled-map owner and block unauthorized copies."
+    content:
+      - "With the copyright permission, hold a filled map and use /copyright to store your UUID as its owner."
+      - "Use /copyright player to assign a cached player name, or provide a UUID directly."
+      - "Only the stored owner or staff with the bypass permission can copy that map in a crafting table or take its copy result from a cartography table."
+      - "Copyright ownership is stored on the map item."
+  feature-toggles:
+    parent: "features"
+    title: "Optional Features"
+    summary: "Inspect the per-player mineral and barrel settings."
+    content:
+      - "LegoWelt registers /togglefeature minerals on|off|view for <page:minerals>Mineral</page> drops."
+      - "It also registers /togglefeature barrels on|off|view for <page:loot-crate>Treasure Barrel</page> generation."
+      - "The command /yeet disables phantoms for the player."
+  survival-server:
+    parent: "getting-started"
+    title: "Survival Server"
+    summary: "LegoWelt systems enabled on the Survival server type."
+    content:
+      - "The Survival server type enables shared-inventory features such as <page:shared-loot/> and <page:custom-potions/>."
+      - "Player <page:warps>Warp</page> tickets can be used in the Survival overworld and nether, subject to the spawn exclusion area and intersection checks."
+      - "<page:spawn-warp>Spawn Warps</page> use chambers in the Survival spawn world. Mining Return Potions also arrive in dedicated Survival chambers."
+      - "Untouched loot-table containers use <page:custom-loot-tables>Custom Loot handling</page>."
+      - "Read <page:getting-started/> and the <page:server-rules/> for general network information."
+  mining-server:
+    parent: "getting-started"
+    title: "Mining Server"
+    summary: "LegoWelt systems exclusive to or enabled on Mining."
+    content:
+      - "The Mining server type enables pickaxe-only <page:minerals>Mineral</page> drops and block-triggered <page:loot-crate/>."
+      - "Hold a scroll and use <page:orientation-scrolls/> to find registered biomes or structures."
+      - "<page:custom-potions>Teleport Potions</page> choose distant random surface coordinates on Mining. Return Potions leave for Survival and create a private one-use warp back."
+      - "Mining is also a shared-inventory server type, so <page:shared-loot/>, <page:custom-loot-tables>Loot-table handling</page>, and supported travel potions are active."
+      - "World reset schedules, access portals, and experience-sharing policies are configured separately by server staff."
+      - "See <page:survival-server/> for systems available there."

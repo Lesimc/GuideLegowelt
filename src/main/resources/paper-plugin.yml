@@ -1,0 +1,15 @@
+name: GuideLegowelt
+version: '${version}'
+main: net.lesimc.guide_legowelt.Guide_legowelt
+bootstrapper: net.lesimc.guide_legowelt.GuideLegoweltBootstrap
+api-version: '26.2'
+description: Guide plugin for the Legowelt Minecraft server
+authors: [lesimc]
+load: POSTWORLD
+permissions:
+  guidelegowelt.wiki:
+    description: Allows players to open the wiki
+    default: true
+  guidelegowelt.admin:
+    description: Allows administrators to reload the wiki
+    default: op

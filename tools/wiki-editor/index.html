@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <link rel="icon" href="data:,">
+  <title>LegoWelt Wiki Editor</title>
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="product-mark" aria-hidden="true">LW</div>
+    <div class="product-copy">
+      <h1>LegoWelt Wiki Editor</h1>
+      <p>src/main/resources/pages.yml</p>
+    </div>
+    <div class="topbar-actions">
+      <span class="save-state" id="save-state" data-state="loading">
+        <span class="state-dot"></span>
+        <span id="save-state-label">Loading</span>
+      </span>
+      <button class="icon-button" id="undo-button" type="button" title="Undo" aria-label="Undo" disabled>
+        <i data-lucide="undo-2"></i>
+      </button>
+      <button class="icon-button" id="redo-button" type="button" title="Redo" aria-label="Redo" disabled>
+        <i data-lucide="redo-2"></i>
+      </button>
+      <button class="icon-button" id="reload-button" type="button" title="Reload files" aria-label="Reload files">
+        <i data-lucide="refresh-cw"></i>
+      </button>
+      <button class="primary-button" id="save-button" type="button">
+        <i data-lucide="save"></i>
+        <span>Save</span>
+      </button>
+      <button class="icon-button danger-quiet" id="stop-button" type="button" title="Stop editor" aria-label="Stop editor">
+        <i data-lucide="power"></i>
+      </button>
+    </div>
+  </header>
+
+  <main class="workspace" id="workspace" aria-busy="true">
+    <aside class="catalog-pane">
+      <div class="pane-heading">
+        <div>
+          <span class="eyebrow">Catalog</span>
+          <h2><span id="page-count">0</span> pages</h2>
+        </div>
+        <button class="icon-button" id="add-page-button" type="button" title="Add page" aria-label="Add page">
+          <i data-lucide="file-plus-2"></i>
+        </button>
+      </div>
+
+      <label class="search-box">
+        <i data-lucide="search"></i>
+        <input id="page-search" type="search" placeholder="Search pages" autocomplete="off">
+      </label>
+
+      <nav class="catalog-tabs" aria-label="Editor sections">
+        <button type="button" class="catalog-tab is-active" data-view="page">
+          <i data-lucide="files"></i><span>Pages</span>
+        </button>
+        <button type="button" class="catalog-tab" data-view="assets">
+          <i data-lucide="images"></i><span>Assets</span>
+        </button>
+        <button type="button" class="catalog-tab" data-view="settings">
+          <i data-lucide="settings-2"></i><span>Wiki</span>
+        </button>
+        <button type="button" class="catalog-tab" data-view="source">
+          <i data-lucide="code-2"></i><span>YAML</span>
+        </button>
+      </nav>
+
+      <div class="validation-summary" id="validation-summary" data-level="ok">
+        <i data-lucide="circle-check"></i>
+        <span id="validation-label">Catalog valid</span>
+      </div>
+
+      <div class="page-tree" id="page-tree" role="listbox" aria-label="Wiki pages"></div>
+    </aside>
+
+    <section class="editor-pane">
+      <div id="loading-state" class="loading-state">
+        <span class="loading-block"></span>
+        <span class="loading-block short"></span>
+        <span class="loading-block tall"></span>
+      </div>
+
+      <div id="page-view" class="editor-view" hidden>
+        <header class="editor-heading">
+          <div class="editor-title-block">
+            <span class="eyebrow" id="page-parent-path">Root page</span>
+            <h2 id="selected-page-title">Page</h2>
+            <code id="selected-page-id">page-id</code>
+          </div>
+          <div class="editor-actions">
+            <button class="icon-button" id="move-up-button" type="button" title="Move page up" aria-label="Move page up">
+              <i data-lucide="arrow-up"></i>
+            </button>
+            <button class="icon-button" id="move-down-button" type="button" title="Move page down" aria-label="Move page down">
+              <i data-lucide="arrow-down"></i>
+            </button>
+            <button class="icon-button" id="duplicate-page-button" type="button" title="Duplicate page" aria-label="Duplicate page">
+              <i data-lucide="copy-plus"></i>
+            </button>
+            <button class="icon-button danger-quiet" id="delete-page-button" type="button" title="Delete page" aria-label="Delete page">
+              <i data-lucide="trash-2"></i>
+            </button>
+          </div>
+        </header>
+
+        <div class="form-grid identity-grid">
+          <label class="field">
+            <span>Page ID</span>
+            <div class="inline-field">
+              <input id="page-id-input" type="text" maxlength="64" spellcheck="false">
+              <button class="text-button" id="rename-page-button" type="button">Rename</button>
+            </div>
+            <small id="page-id-error"></small>
+          </label>
+          <label class="field">
+            <span>Parent</span>
+            <select id="page-parent-select"></select>
+          </label>
+          <label class="toggle-field">
+            <span>
+              <strong>Page background</strong>
+              <small>Override the global background</small>
+            </span>
+            <input id="page-background-toggle" type="checkbox">
+            <span class="toggle-control" aria-hidden="true"></span>
+          </label>
+        </div>
+
+        <section class="form-section">
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow">Navigation</span>
+              <h3>Title and summary</h3>
+            </div>
+          </div>
+          <div class="mini-field">
+            <label for="page-title-input">Title</label>
+            <div class="mini-toolbar" data-target="page-title-input"></div>
+            <textarea id="page-title-input" rows="2" spellcheck="false"></textarea>
+            <div class="inline-preview" id="page-title-inline-preview"></div>
+          </div>
+          <div class="mini-field">
+            <label for="page-summary-input">Summary</label>
+            <div class="mini-toolbar" data-target="page-summary-input"></div>
+            <textarea id="page-summary-input" rows="2" spellcheck="false"></textarea>
+            <div class="inline-preview" id="page-summary-inline-preview"></div>
+          </div>
+        </section>
+
+        <section class="form-section">
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow">Dialog body</span>
+              <h3>Content</h3>
+            </div>
+            <button class="secondary-button" id="add-content-button" type="button">
+              <i data-lucide="plus"></i><span>Add line</span>
+            </button>
+          </div>
+          <div class="content-list" id="content-list"></div>
+        </section>
+
+        <section class="form-section">
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow">Resource pack</span>
+              <h3>Page images</h3>
+            </div>
+            <button class="secondary-button" id="import-image-button" type="button">
+              <i data-lucide="image-plus"></i><span>Import PNG</span>
+            </button>
+          </div>
+          <div class="page-images" id="page-images"></div>
+        </section>
+      </div>
+
+      <div id="assets-view" class="editor-view" hidden>
+        <header class="editor-heading">
+          <div class="editor-title-block">
+            <span class="eyebrow">Resource pack</span>
+            <h2>Wiki image assets</h2>
+            <code>resource-pack/assets/guidelegowelt/font/wiki.json</code>
+          </div>
+          <button class="secondary-button" id="assets-import-button" type="button">
+            <i data-lucide="image-plus"></i><span>Import PNG</span>
+          </button>
+        </header>
+        <div class="asset-stats" id="asset-stats"></div>
+        <div class="asset-list" id="asset-list"></div>
+      </div>
+
+      <div id="settings-view" class="editor-view" hidden>
+        <header class="editor-heading">
+          <div class="editor-title-block">
+            <span class="eyebrow">Table of contents</span>
+            <h2>Wiki settings</h2>
+            <code>wiki</code>
+          </div>
+        </header>
+        <section class="form-section settings-section">
+          <div class="mini-field">
+            <label for="wiki-title-input">Wiki title</label>
+            <div class="mini-toolbar" data-target="wiki-title-input"></div>
+            <textarea id="wiki-title-input" rows="2" spellcheck="false"></textarea>
+            <div class="inline-preview" id="wiki-title-inline-preview"></div>
+          </div>
+          <div class="mini-field">
+            <label for="wiki-introduction-input">Introduction</label>
+            <div class="mini-toolbar" data-target="wiki-introduction-input"></div>
+            <textarea id="wiki-introduction-input" rows="4" spellcheck="false"></textarea>
+            <div class="inline-preview" id="wiki-introduction-inline-preview"></div>
+          </div>
+          <div class="form-grid settings-grid">
+            <label class="field">
+              <span>Columns</span>
+              <input id="wiki-columns-input" type="number" min="1" max="4" step="1">
+            </label>
+            <label class="toggle-field">
+              <span>
+                <strong>Global background</strong>
+                <small>Use the configured wiki glyph</small>
+              </span>
+              <input id="wiki-background-toggle" type="checkbox">
+              <span class="toggle-control" aria-hidden="true"></span>
+            </label>
+          </div>
+          <label class="field" id="wiki-background-field">
+            <span>Background MiniMessage</span>
+            <input id="wiki-background-input" type="text" spellcheck="false">
+          </label>
+        </section>
+      </div>
+
+      <div id="source-view" class="editor-view source-view" hidden>
+        <header class="editor-heading">
+          <div class="editor-title-block">
+            <span class="eyebrow">Advanced</span>
+            <h2>YAML source</h2>
+            <code>src/main/resources/pages.yml</code>
+          </div>
+          <button class="secondary-button" id="apply-source-button" type="button">
+            <i data-lucide="check"></i><span>Apply source</span>
+          </button>
+        </header>
+        <textarea id="yaml-source-input" class="source-editor" spellcheck="false"></textarea>
+        <div class="source-error" id="source-error" hidden></div>
+      </div>
+    </section>
+
+    <aside class="preview-pane">
+      <div class="pane-heading preview-heading">
+        <div>
+          <span class="eyebrow">Live preview</span>
+          <h2>Wiki dialog</h2>
+        </div>
+        <div class="preview-mode" role="group" aria-label="Preview mode">
+          <button type="button" class="is-active" data-preview="page">Page</button>
+          <button type="button" data-preview="contents">Contents</button>
+        </div>
+      </div>
+      <div class="minecraft-stage">
+        <div class="dialog-preview" id="dialog-preview">
+          <div class="dialog-title" id="preview-title"></div>
+          <div class="dialog-scroll" id="preview-body"></div>
+          <div class="dialog-actions" id="preview-actions"></div>
+        </div>
+      </div>
+      <div class="issue-list" id="issue-list"></div>
+    </aside>
+  </main>
+
+  <dialog id="page-dialog" class="modal">
+    <form method="dialog" id="page-dialog-form">
+      <header>
+        <div>
+          <span class="eyebrow">Catalog</span>
+          <h2>New page</h2>
+        </div>
+        <button class="icon-button" value="cancel" type="submit" aria-label="Close" title="Close">
+          <i data-lucide="x"></i>
+        </button>
+      </header>
+      <label class="field">
+        <span>Page ID</span>
+        <input id="new-page-id" type="text" maxlength="64" required spellcheck="false">
+      </label>
+      <label class="field">
+        <span>Title</span>
+        <input id="new-page-title" type="text" required>
+      </label>
+      <label class="field">
+        <span>Parent</span>
+        <select id="new-page-parent"></select>
+      </label>
+      <footer>
+        <button class="secondary-button" value="cancel" type="submit">Cancel</button>
+        <button class="primary-button" id="create-page-button" value="default" type="submit">
+          <i data-lucide="file-plus-2"></i><span>Create page</span>
+        </button>
+      </footer>
+    </form>
+  </dialog>
+
+  <dialog id="image-dialog" class="modal image-modal">
+    <form method="dialog" id="image-dialog-form">
+      <header>
+        <div>
+          <span class="eyebrow">Resource pack</span>
+          <h2>Import wiki image</h2>
+        </div>
+        <button class="icon-button" value="cancel" type="submit" aria-label="Close" title="Close">
+          <i data-lucide="x"></i>
+        </button>
+      </header>
+      <div class="image-import-layout">
+        <div class="image-drop" id="image-drop">
+          <input id="image-file-input" type="file" accept="image/png">
+          <canvas id="image-import-preview" width="460" height="280"></canvas>
+          <div class="image-drop-empty" id="image-drop-empty">
+            <i data-lucide="image-up"></i>
+            <strong>Select PNG</strong>
+          </div>
+        </div>
+        <div class="image-options">
+          <label class="field">
+            <span>Attach to page</span>
+            <select id="image-page-select"></select>
+          </label>
+          <label class="field">
+            <span>Asset name</span>
+            <input id="image-name-input" type="text" maxlength="96" spellcheck="false">
+          </label>
+          <label class="field">
+            <span>Rendered width</span>
+            <div class="range-field">
+              <input id="image-width-input" type="range" min="32" max="960" value="464">
+              <output id="image-width-output">464 px</output>
+            </div>
+          </label>
+          <label class="field">
+            <span>Ascent</span>
+            <input id="image-ascent-input" type="number" min="-1024" max="1024" value="7">
+          </label>
+          <div class="image-metrics" id="image-metrics">
+            <span><strong id="metric-source">0 x 0</strong><small>Source</small></span>
+            <span><strong id="metric-output">0 x 0</strong><small>Rendered</small></span>
+            <span><strong id="metric-tiles">0</strong><small>Tiles</small></span>
+            <span><strong id="metric-glyph">-</strong><small>First glyph</small></span>
+          </div>
+        </div>
+      </div>
+      <footer>
+        <button class="secondary-button" value="cancel" type="submit">Cancel</button>
+        <button class="primary-button" id="process-image-button" value="default" type="submit" disabled>
+          <i data-lucide="wand-sparkles"></i><span>Process image</span>
+        </button>
+      </footer>
+    </form>
+  </dialog>
+
+  <div class="toast-region" id="toast-region" aria-live="polite"></div>
+
+  <script src="vendor/js-yaml.umd.min.js"></script>
+  <script src="vendor/lucide.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
